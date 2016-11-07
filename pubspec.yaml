@@ -1,0 +1,8 @@
+name: jaguar_mustache
+version: 0.0.1
+description: A simple post interceptor to render mustache template
+
+dependencies:
+  mustache: 0.2.5+1
+  jaguar:
+    path: ../jaguar/
