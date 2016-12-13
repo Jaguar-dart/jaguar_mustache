@@ -2,7 +2,6 @@
 library jaguar.example;
 
 import 'dart:async';
-import 'dart:io';
 import 'package:jaguar/jaguar.dart';
 import 'package:jaguar_mustache/jaguar_mustache.dart';
 
@@ -12,8 +11,8 @@ part 'main.g.dart';
 @Api(path: '/api')
 class ExampleApi extends _$JaguarExampleApi {
   /// Example of basic route with mongo
-  @Get('/')
-  @MustacheRender(uri: 'example/test.template.html')
+  @Get(path: '/')
+  @WrapMustacheRender(uri: 'example/test.template.html')
   Future<Map<String, String>> mustache() async {
     return {'login': 'Kleak'};
   }

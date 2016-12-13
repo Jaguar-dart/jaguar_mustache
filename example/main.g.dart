@@ -8,28 +8,30 @@ part of jaguar.example;
 // **************************************************************************
 
 abstract class _$JaguarExampleApi implements RequestHandler {
-  static const List<RouteBase> _routes = const <RouteBase>[const Get('/')];
+  static const List<RouteBase> routes = const <RouteBase>[const Get(path: '/')];
 
   Future<Map<String, String>> mustache();
 
-  Future<bool> requestHandler(HttpRequest request, {String prefix: ''}) async {
+  Future<bool> handleRequest(HttpRequest request, {String prefix: ''}) async {
     prefix += '/api';
     PathParams pathParams = new PathParams();
     bool match = false;
 
+//Handler for mustache
     match =
-        _routes[0].match(request.uri.path, request.method, prefix, pathParams);
+        routes[0].match(request.uri.path, request.method, prefix, pathParams);
     if (match) {
-      MustacheRender iMustacheRender = new MustacheRender(
+      Response rRouteResponse = new Response(null);
+      MustacheRender iMustacheRender = new WrapMustacheRender(
         uri: 'example/test.template.html',
-      );
-      Map<String, String> rRouteResponse;
-      rRouteResponse = await mustache();
-      request.response.statusCode = 200;
-      await iMustacheRender.post(
-        request,
+      )
+          .createInterceptor();
+      rRouteResponse.statusCode = 200;
+      rRouteResponse.value = await mustache();
+      rRouteResponse = await iMustacheRender.post(
         rRouteResponse,
       );
+      await rRouteResponse.writeResponse(request.response);
       return true;
     }
 
