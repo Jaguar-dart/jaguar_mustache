@@ -8,9 +8,14 @@ part of jaguar.example;
 // **************************************************************************
 
 abstract class _$JaguarExampleApi implements RequestHandler {
-  static const List<RouteBase> routes = const <RouteBase>[const Get(path: '/')];
+  static const List<RouteBase> routes = const <RouteBase>[
+    const Get(path: '/file'),
+    const Get(path: '/str')
+  ];
 
   Future<Map<String, String>> mustache();
+
+  Future<Map<String, String>> mustacheStr();
 
   Future<bool> handleRequest(HttpRequest request, {String prefix: ''}) async {
     prefix += '/api';
@@ -21,17 +26,47 @@ abstract class _$JaguarExampleApi implements RequestHandler {
     match =
         routes[0].match(request.uri.path, request.method, prefix, pathParams);
     if (match) {
-      Response rRouteResponse = new Response(null);
-      MustacheRender iMustacheRender = new WrapMustacheRender(
-        uri: 'example/test.template.html',
-      )
-          .createInterceptor();
-      rRouteResponse.statusCode = 200;
-      rRouteResponse.value = await mustache();
-      rRouteResponse = await iMustacheRender.post(
-        rRouteResponse,
-      );
-      await rRouteResponse.writeResponse(request.response);
+      Response<Map> rRouteResponse0 = new Response(null);
+      MustacheRender iMustacheRender;
+      try {
+        iMustacheRender = new WrapMustacheRender(
+          'example/test.template.html',
+        )
+            .createInterceptor();
+        rRouteResponse0.statusCode = 200;
+        rRouteResponse0.value = await mustache();
+        Response<String> rRouteResponse1 = await iMustacheRender.post(
+          rRouteResponse0,
+        );
+        await rRouteResponse1.writeResponse(request.response);
+      } catch (e) {
+        await iMustacheRender?.onException();
+        rethrow;
+      }
+      return true;
+    }
+
+//Handler for mustacheStr
+    match =
+        routes[1].match(request.uri.path, request.method, prefix, pathParams);
+    if (match) {
+      Response<Map> rRouteResponse0 = new Response(null);
+      MustacheStrRender iMustacheStrRender;
+      try {
+        iMustacheStrRender = new WrapMustacheStrRender(
+          kTemplate,
+        )
+            .createInterceptor();
+        rRouteResponse0.statusCode = 200;
+        rRouteResponse0.value = await mustacheStr();
+        Response<String> rRouteResponse1 = iMustacheStrRender.post(
+          rRouteResponse0,
+        );
+        await rRouteResponse1.writeResponse(request.response);
+      } catch (e) {
+        await iMustacheStrRender?.onException();
+        rethrow;
+      }
       return true;
     }
 

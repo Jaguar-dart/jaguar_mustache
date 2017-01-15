@@ -1,7 +1,12 @@
 name: jaguar_mustache
-version: 0.1.0
-description: A simple post interceptor to render mustache template
+version: 0.0.1
+authors:
+- Ravi Teja Gudapati <tejainece@gmail.com>
+- Kevin Segaud <segaud.kevin@gmail.com>
+homepage: http://jaguar-dart.github.io
+
+description: Jaguar interceptors to render mustache templates
 
 dependencies:
   mustache: 0.2.5+1
-  jaguar: 0.1.0
+  jaguar: '>=0.1.15 <0.2.0'
