@@ -8,5 +8,5 @@ homepage: http://jaguar-dart.github.io
 description: Jaguar interceptors to render mustache templates
 
 dependencies:
-  mustache: 0.2.5+1
+  mustache: ">=0.2.5+1 <0.3.0"
   jaguar: '>=0.1.15 <0.2.0'
