@@ -1,7 +1,6 @@
 /// File: main.dart
 library jaguar.example;
 
-import 'dart:io';
 import 'dart:async';
 import 'package:jaguar/jaguar.dart';
 import 'package:jaguar_mustache/jaguar_mustache.dart';

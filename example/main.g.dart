@@ -17,7 +17,7 @@ abstract class _$JaguarExampleApi implements RequestHandler {
 
   Future<Map<String, String>> mustacheStr();
 
-  Future<bool> handleRequest(HttpRequest request, {String prefix: ''}) async {
+  Future<Response> handleRequest(Request request, {String prefix: ''}) async {
     prefix += '/api';
     PathParams pathParams = new PathParams();
     bool match = false;
@@ -34,16 +34,16 @@ abstract class _$JaguarExampleApi implements RequestHandler {
         )
             .createInterceptor();
         rRouteResponse0.statusCode = 200;
+        rRouteResponse0.setContentType('text/plain; charset=us-ascii');
         rRouteResponse0.value = await mustache();
         Response<String> rRouteResponse1 = await iMustacheRender.post(
           rRouteResponse0,
         );
-        await rRouteResponse1.writeResponse(request.response);
+        return rRouteResponse1;
       } catch (e) {
         await iMustacheRender?.onException();
         rethrow;
       }
-      return true;
     }
 
 //Handler for mustacheStr
@@ -58,18 +58,18 @@ abstract class _$JaguarExampleApi implements RequestHandler {
         )
             .createInterceptor();
         rRouteResponse0.statusCode = 200;
+        rRouteResponse0.setContentType('text/plain; charset=us-ascii');
         rRouteResponse0.value = await mustacheStr();
         Response<String> rRouteResponse1 = iMustacheStrRender.post(
           rRouteResponse0,
         );
-        await rRouteResponse1.writeResponse(request.response);
+        return rRouteResponse1;
       } catch (e) {
         await iMustacheStrRender?.onException();
         rethrow;
       }
-      return true;
     }
 
-    return false;
+    return null;
   }
 }
