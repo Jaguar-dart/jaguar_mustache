@@ -10,7 +10,7 @@ part 'main.g.dart';
 const String kTemplate = r"<h1>{{login}}</h1>";
 
 @Api(path: '/api')
-class ExampleApi extends _$JaguarExampleApi {
+class ExampleApi {
   @Get(path: '/file')
   @WrapMustacheRender('example/test.template.html')
   Future<Map<String, String>> mustache() async {
@@ -25,7 +25,7 @@ class ExampleApi extends _$JaguarExampleApi {
 }
 
 Future<Null> main(List<String> args) async {
-  ExampleApi api = new ExampleApi();
+  final api = new JaguarExampleApi();
 
   Configuration configuration = new Configuration();
   configuration.addApi(api);

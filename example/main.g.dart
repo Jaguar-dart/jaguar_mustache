@@ -7,15 +7,19 @@ part of jaguar.example;
 // Target: class ExampleApi
 // **************************************************************************
 
-abstract class _$JaguarExampleApi implements RequestHandler {
+class JaguarExampleApi implements RequestHandler {
   static const List<RouteBase> routes = const <RouteBase>[
     const Get(path: '/file'),
     const Get(path: '/str')
   ];
 
-  Future<Map<String, String>> mustache();
+  final ExampleApi _internal;
 
-  Future<Map<String, String>> mustacheStr();
+  factory JaguarExampleApi() {
+    final instance = new ExampleApi();
+    return new JaguarExampleApi.from(instance);
+  }
+  JaguarExampleApi.from(this._internal);
 
   Future<Response> handleRequest(Request request, {String prefix: ''}) async {
     prefix += '/api';
@@ -34,8 +38,9 @@ abstract class _$JaguarExampleApi implements RequestHandler {
         )
             .createInterceptor();
         rRouteResponse0.statusCode = 200;
-        rRouteResponse0.setContentType('text/plain; charset=us-ascii');
-        rRouteResponse0.value = await mustache();
+        rRouteResponse0.headers
+            .set('content-type', 'text/plain; charset=utf-8');
+        rRouteResponse0.value = await _internal.mustache();
         Response<String> rRouteResponse1 = await iMustacheRender.post(
           rRouteResponse0,
         );
@@ -58,8 +63,9 @@ abstract class _$JaguarExampleApi implements RequestHandler {
         )
             .createInterceptor();
         rRouteResponse0.statusCode = 200;
-        rRouteResponse0.setContentType('text/plain; charset=us-ascii');
-        rRouteResponse0.value = await mustacheStr();
+        rRouteResponse0.headers
+            .set('content-type', 'text/plain; charset=utf-8');
+        rRouteResponse0.value = await _internal.mustacheStr();
         Response<String> rRouteResponse1 = iMustacheStrRender.post(
           rRouteResponse0,
         );
