@@ -6,14 +6,12 @@ import 'dart:io';
 import 'package:jaguar/jaguar.dart';
 import 'package:mustache/mustache.dart';
 
-class WrapMustacheRender implements RouteWrapper<MustacheRender> {
+class WrapMustacheRender extends RouteWrapper<MustacheRender> {
   final String uri;
 
   final String id;
 
-  final Map<Symbol, MakeParam> makeParams;
-
-  const WrapMustacheRender(this.uri, {this.id, this.makeParams});
+  const WrapMustacheRender(this.uri, {this.id});
 
   MustacheRender createInterceptor() => new MustacheRender(uri);
 }
@@ -36,14 +34,12 @@ class MustacheRender extends Interceptor {
   }
 }
 
-class WrapMustacheStrRender implements RouteWrapper<MustacheStrRender> {
+class WrapMustacheStrRender extends RouteWrapper<MustacheStrRender> {
   final String template;
 
   final String id;
 
-  final Map<Symbol, MakeParam> makeParams;
-
-  const WrapMustacheStrRender(this.template, {this.id, this.makeParams});
+  const WrapMustacheStrRender(this.template, {this.id});
 
   MustacheStrRender createInterceptor() => new MustacheStrRender(template);
 }

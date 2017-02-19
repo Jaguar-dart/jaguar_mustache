@@ -27,8 +27,8 @@ class ExampleApi {
 Future<Null> main(List<String> args) async {
   final api = new JaguarExampleApi();
 
-  Configuration configuration = new Configuration();
+  Jaguar configuration = new Jaguar();
   configuration.addApi(api);
 
-  await serve(configuration);
+  await configuration.serve();
 }
