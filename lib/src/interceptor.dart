@@ -6,23 +6,14 @@ import 'dart:io';
 import 'package:jaguar/jaguar.dart';
 import 'package:mustache/mustache.dart';
 
-class WrapMustacheRender extends RouteWrapper<MustacheRender> {
-  final String uri;
-
-  final String id;
-
-  const WrapMustacheRender(this.uri, {this.id});
-
-  MustacheRender createInterceptor() => new MustacheRender(uri);
-}
-
 class MustacheRender extends Interceptor {
   final String uri;
 
   const MustacheRender(this.uri);
 
-  @InputRouteResponse()
-  Future<Response<String>> post(Response result) async {
+  Null pre(_) => null;
+
+  Future<Response<String>> post(_, Response result) async {
     final File f = new File(uri);
     if (!await f.exists()) {
       throw "file not found !";
@@ -34,23 +25,14 @@ class MustacheRender extends Interceptor {
   }
 }
 
-class WrapMustacheStrRender extends RouteWrapper<MustacheStrRender> {
-  final String template;
-
-  final String id;
-
-  const WrapMustacheStrRender(this.template, {this.id});
-
-  MustacheStrRender createInterceptor() => new MustacheStrRender(template);
-}
-
 class MustacheStrRender extends Interceptor {
   final String template;
 
   const MustacheStrRender(this.template);
 
-  @InputRouteResponse()
-  Response<String> post(Response result) {
+  Null pre(_) => null;
+
+  Response<String> post(_, Response result) {
     final Template t = new Template(template);
     final Response<String> ret =
         new Response<String>(t.renderString(result.value));
