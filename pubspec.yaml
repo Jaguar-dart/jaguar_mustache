@@ -5,6 +5,9 @@ authors:
 - Kevin Segaud <segaud.kevin@gmail.com>
 homepage: https://github.com/Jaguar-dart/jaguar_mustache
 
+environment:
+  sdk: ">=1.8.0 <2.0.0"
+
 description: Jaguar interceptors to render mustache templates
 
 dependencies:
